@@ -1,8 +1,9 @@
 const Pizza = (props) => {
   return (
-    <div>
-      <h2 className="pizza__heading">{props.name}</h2>
-      <div className="pizza_description">{props.description}</div>
+    <div className="pizza">
+      <h1>{props.name}</h1>
+      <p>{props.description}</p>
+      <img src={props.src} alt={props.name} />
     </div>
   );
 };
