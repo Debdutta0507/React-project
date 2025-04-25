@@ -2,6 +2,7 @@ import { createLazyFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import fetchPastPizza from "../api/fetchPastPizza";
 import { useState } from "react";
+import FousedOrder from "../FousedOrder";
 
 export const Route = createLazyFileRoute("/past")({
   component: PastOrder,
@@ -9,6 +10,7 @@ export const Route = createLazyFileRoute("/past")({
 
 function PastOrder() {
   const [page, setPage] = useState(1);
+  const [order, setorder] = useState(false);
   const { isLoading, data } = useQuery({
     queryKey: ["past-Order", page],
     queryFn: () => fetchPastPizza(page),
@@ -30,7 +32,7 @@ function PastOrder() {
           </thead>
           <tbody>
             {data.map((val) => (
-              <tr>
+              <tr onClick={() => setorder(val.order_id)}>
                 <td>{val.order_id}</td>
                 <td>{val.date}</td>
                 <td>{val.time}</td>
@@ -47,6 +49,7 @@ function PastOrder() {
           </button>
         </div>
       </div>
+      {order && <FousedOrder focusedOrder={order} setFocusedOrder={setorder} />}
     </>
   );
 }

@@ -56,7 +56,6 @@ function Order() {
     setPizzaTypes(pizzasJson);
     setLoading(false);
   }
-  console.log("cart", cart);
 
   return (
     <div className="order">
