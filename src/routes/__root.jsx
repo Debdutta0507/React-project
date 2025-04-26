@@ -5,6 +5,7 @@ import PizzaOfTheDay from "../PizzaOfTheDay";
 import { useState } from "react";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ErrorBoundary from "../ErrorBoundary";
 
 export const Route = createRootRoute({
   component: () => {
