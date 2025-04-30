@@ -90,7 +90,7 @@ function Order() {
                 name="pizza-type"
                 value={pizzaType}
               >
-                {pizzaTypesAA.map((pizza) => (
+                {pizzaTypes.map((pizza) => (
                   <option key={pizza.id} value={pizza.id}>
                     {pizza.name}
                   </option>
