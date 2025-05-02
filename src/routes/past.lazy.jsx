@@ -1,23 +1,35 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import fetchPastPizza from "../api/fetchPastPizza";
-import { useState } from "react";
+import { Suspense, use, useState } from "react";
 import FousedOrder from "../FousedOrder";
 
-export const Route = createLazyFileRoute("/past")({
-  component: PastOrder,
-});
-
-function PastOrder() {
+const SuspensePastOrder = () => {
   const [page, setPage] = useState(1);
-  const [order, setorder] = useState(false);
-  const { isLoading, data } = useQuery({
+  const loadPromise = useQuery({
     queryKey: ["past-Order", page],
     queryFn: () => fetchPastPizza(page),
     staleTime: 300000,
-  });
+  }).promise;
+  return (
+    <Suspense
+      fallback={
+        <div className="past-order">
+          <h2>Past Order loading</h2>
+        </div>
+      }
+    >
+      <PastOrder loadPromise={loadPromise} page={page} setPage={setPage} />
+    </Suspense>
+  );
+};
+export const Route = createLazyFileRoute("/past")({
+  component: SuspensePastOrder,
+});
 
-  if (isLoading) return <div>loading bro....</div>;
+function PastOrder({ loadPromise, page, setPage }) {
+  const data = use(loadPromise);
+  const [order, setorder] = useState(false);
 
   return (
     <>

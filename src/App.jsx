@@ -5,7 +5,13 @@ import { routeTree } from "./routeTree.gen";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const App = () => {
   const router = createRouter({ routeTree });
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        experimental_prefetchInRender: true,
+      },
+    },
+  });
   return (
     <StrictMode>
       <QueryClientProvider client={queryClient}>

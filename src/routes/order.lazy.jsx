@@ -57,6 +57,16 @@ function Order() {
   useEffect(() => {
     fetchPizzaTypes();
   }, []);
+  const updateCart = () => {
+    setCart([
+      ...cart,
+      {
+        type: pizzaType,
+        size: pizzaSize,
+        price: selectedPizza.sizes[pizzaSize],
+      },
+    ]);
+  };
 
   async function fetchPizzaTypes() {
     const pizzasRes = await fetch("/api/pizzas");
@@ -69,19 +79,7 @@ function Order() {
     <>
       <div className="order">
         <h2>Create Order</h2>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            setCart([
-              ...cart,
-              {
-                type: pizzaType,
-                size: pizzaSize,
-                price: selectedPizza.sizes[pizzaSize],
-              },
-            ]);
-          }}
-        >
+        <form action={updateCart}>
           <div>
             <div>
               <label htmlFor="pizza-type">Pizza Type</label>
